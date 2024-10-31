@@ -17,6 +17,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  
   "scripts": {
     "start": "npm install --legacy-peer-deps && react-scripts start",
     "build": "npm install --legacy-peer-deps && react-scripts build",
