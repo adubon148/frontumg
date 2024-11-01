@@ -98,6 +98,7 @@ const Login= () =>{
                             variant='contained'
                             color='secondary'
                             className={classes.Button}
+                            href='https://frontumg.onrender.com/home'
                         >Iniciar Sesion</Button>
                     </Form>
 

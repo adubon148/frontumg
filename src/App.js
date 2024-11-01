@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Autores from './components/autores';
 import Login from './components/login';
 import Clientes from './components/Clientes.js';
+import Home from './components/home.js';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
 const theme = createTheme({
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Login />,
+  },
+  {
+    path: '/home',
+    element: <Home />,
   },
   {
     path: '/autores',
