@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Autores from './components/autores';
 import Login from './components/login';
-import Clientes from './components/clientes';
+import Clientes from './components/Clientes.js';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
 const theme = createTheme({
