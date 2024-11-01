@@ -34,6 +34,8 @@ function Clientes(){
     const [modalModificar,setModalModificar]=useState(false);
     const [modalInsertar, setModalInsertar]=useState(false);
     const [modalElimiar,setModalEliminar]=useState(false);
+
+
     const getClients = async () => {
       await axios.get(baseurl+"all")
         .then(response => {
@@ -45,73 +47,69 @@ function Clientes(){
         });
     }
 
-    const [nuevoAutor,setNuevoAutor]=useState({
-        
-        Nombre:'',
-        Nacionalidad:'',
-        FechaNac:''
-    })
-
-    const [selectAutor,setSelctAutor]=useState({
-        id:'',
-        Nombre:'',
-        Nacionalidad:'',
-        FechaNac:''
+    const [clientselect,setClientselect]=useState({
+      dpi:'',
+      nombre:'',
+      apellido:'',
+      edad:'',
+      direccion:'',
+      Nacionalidad:'',
+      telefono:'',
+      email:'',
+      estadocivil:'',
+      nit:''
     })
 
     const handeChange=e=>{
         const {name,value}= e.target;
-        setNuevoAutor(prevState=>({
+        setClientselect(prevState=>({
             ...prevState,
             [name]:value
         }))
-        console.log(nuevoAutor)
-    }
-
-    const handeChangeEdit=e=>{
-        const {name,value}= e.target;
-        setSelctAutor(prevState=>({
-            ...prevState,
-            [name]:value
-        }))
-        console.log(selectAutor)
+        console.log(clientselect)
     }
 
     const peticionPost=async()=>{
-        await axios.post(baseurl+"crear",nuevoAutor)
+        await axios.post(baseurl+"crear",clientselect)
         .then(response=>{
-            getautores();
-            abrirCerrarModalInsertar();
-        }
             
+            abrirCerrarModalInsertar();
+        }  
         )
+        getClients();
     }
 
     const peticionDelete=async()=>{
-        await axios.delete(baseurl+"delete/"+selectAutor.id)
+        await axios.delete(baseurl+"delete/"+clientselect.dpi)
         .then(response=>{
-            setData(data.filter(autor=>autor.ID!==selectAutor.id))
+            setData(data.filter(cliente=>cliente.dpi!==clientselect.dpi))
         })
         abrirCerrarModalEliminar();
-        getautores();
+        getClients();
     }
 
     const peticionPut=async()=>{
-        await axios.put(baseurl+"update/"+selectAutor.id,selectAutor)
+        await axios.put(baseurl+"update/"+clientselect.dpi,clientselect)
         .then(response=>{
             var datanueva=data;
-            datanueva.map(autor=>{
-                if(selectAutor.id===autor.id){
-                    autor.Nombre=selectAutor.Nombre;
-                    autor.Nacionalidad=selectAutor.Nacionalidad;
-                    autor.FechaNac=selectAutor.FechaNac;
+            datanueva.map(cliente=>{
+                if(clientselect.dpi===cliente.dpi){
+                    cliente.nombre=clientselect.nombre
+                    cliente.apellido=clientselect.apellido
+                    cliente.edad=clientselect.edad
+                    cliente.direccion=clientselect.direccion
+                    cliente.Nacionalidad=clientselect.Nacionalidad
+                    cliente.telefono=clientselect.telefono
+                    cliente.email=clientselect.email
+                    cliente.estadocivil=clientselect.estadocivil
+                    cliente.nit=clientselect.nit                    
                     
                 }
             })
             setData(datanueva);
             abrirCerrarModaModificar();
         })
-        getautores();
+        getClients();
     }
 
     const abrirCerrarModalInsertar=()=>{
@@ -125,8 +123,8 @@ function Clientes(){
         setModalModificar(!modalModificar)
     }
 
-    const selAutor=(autor, tipo)=>{
-        setSelctAutor(autor);
+    const selCliente=(cliente, tipo)=>{
+        setClientselect(cliente);
         (tipo==='Edit')?abrirCerrarModaModificar():abrirCerrarModalEliminar();
     }
 
@@ -134,19 +132,33 @@ function Clientes(){
   
     useEffect(() => {
       const fetchData = async () => {
-        await getautores();
+        await getClients();
       };
       fetchData();
     }, []);
 
     const bodyInsertar=(
         <div className={styles.modal}>
-            <h3>Agregar Nuevo autor</h3>
-            <TextField name='Nombre' className={styles.inputMaterial} label="Nombre"onChange={handeChange}/>
+            <h3>Agregar Nuevo Cliente</h3>
+            <TextField name='dpi' className={styles.inputMaterial} label="DPI"onChange={handeChange}/>
             <br/>
-            <TextField name='Nacionalidad' className={styles.inputMaterial} label="Nacionalidad"onChange={handeChange}/>
+            <TextField name='nombre' className={styles.inputMaterial} label="Nombre"onChange={handeChange}/>
             <br/>
-            <TextField name='FechaNac' className={styles.inputMaterial} label="FechaNac"onChange={handeChange} />
+            <TextField name='apellido' className={styles.inputMaterial} label="Apellido"onChange={handeChange} />
+            <br/>
+            <TextField name='edad' className={styles.inputMaterial} label="Edad"onChange={handeChange} />
+            <br/>
+            <TextField name='direccion' className={styles.inputMaterial} label="Direccion"onChange={handeChange} />
+            <br/>
+            <TextField name='Nacionalidad' className={styles.inputMaterial} label="Nacionalidad"onChange={handeChange} />
+            <br/>
+            <TextField name='telefono' className={styles.inputMaterial} label="telefono"onChange={handeChange} />
+            <br/>
+            <TextField name='email' className={styles.inputMaterial} label="E-mail"onChange={handeChange} />
+            <br/>
+            <TextField name='estadocivil' className={styles.inputMaterial} label="estadocivil"onChange={handeChange} />
+            <br/>
+            <TextField name='nit' className={styles.inputMaterial} label="nit"onChange={handeChange} />
             <br/><br/>
             <div align="right">
                 <button color="primary" onClick={()=>peticionPost()}>Insertar</button>
@@ -159,11 +171,23 @@ function Clientes(){
     const bodyEditar=(
         <div className={styles.modal}>
         <h3>Editar autor</h3>
-        <TextField name='Nombre' className={styles.inputMaterial} label="Nombre"onChange={handeChangeEdit} value={selectAutor&&selectAutor.Nombre}/>
+        <TextField name='nombre' className={styles.inputMaterial} label="Nombre"onChange={handeChange} value={clientselect&&clientselect.nombre}/>
         <br/>
-        <TextField name='Nacionalidad' className={styles.inputMaterial} label="Nacionalidad"onChange={handeChangeEdit} value={selectAutor&&selectAutor.Nacionalidad}/>
+        <TextField name='apellido' className={styles.inputMaterial} label="Apellido"onChange={handeChange}  value={clientselect&&clientselect.apellido}/>
         <br/>
-        <TextField name='FechaNac' className={styles.inputMaterial} label="FechaNac"onChange={handeChangeEdit}value={selectAutor&&selectAutor.FechaNac}/>
+        <TextField name='edad' className={styles.inputMaterial} label="Edad"onChange={handeChange}  value={clientselect&&clientselect.edad}/>
+        <br/>
+        <TextField name='direccion' className={styles.inputMaterial} label="Direccion"onChange={handeChange} value={clientselect&&clientselect.direccion} />
+        <br/>
+        <TextField name='Nacionalidad' className={styles.inputMaterial} label="Nacionalidad"onChange={handeChange} value={clientselect&&clientselect.Nacionalidad} />
+        <br/>
+        <TextField name='telefono' className={styles.inputMaterial} label="telefono"onChange={handeChange} value={clientselect&&clientselect.telefono} />
+        <br/>
+        <TextField name='email' className={styles.inputMaterial} label="E-mail"onChange={handeChange}  value={clientselect&&clientselect.email}/>
+        <br/>
+        <TextField name='estadocivil' className={styles.inputMaterial} label="estadocivil"onChange={handeChange} value={clientselect&&clientselect.estadocivil} />
+        <br/>
+        <TextField name='nit' className={styles.inputMaterial} label="nit"onChange={handeChange} value={clientselect&&clientselect.nit} />
         <br/><br/>
         <div align="right">
             <button color="primary" onClick={()=>peticionPut()}>Editar</button>
@@ -174,7 +198,7 @@ function Clientes(){
 
     const bodyEliminar=(
         <div className={styles.modal}>
-            <p>Estas seguro de querer elinar el autor:<b>{selectAutor&&selectAutor.Nombre}</b>?</p>
+            <p>Estas seguro de querer elinar el Cliente:<b>{clientselect&&clientselect.nombre}</b>?</p>
         <div align="right">
             <button color="secondary" onClick={()=>peticionDelete()}>Si</button>
             <button onClick={()=>abrirCerrarModalEliminar()}>No</button>
@@ -184,7 +208,7 @@ function Clientes(){
 
     return (
         <div className="App">
-        <h1>Lista de Autores</h1>
+        <h1>Lista de Clientes</h1>
         <br />
        <Button onClick={()=>abrirCerrarModalInsertar()}>Insertar</Button> 
         <br /><br />
@@ -192,22 +216,35 @@ function Clientes(){
   <Table>
     <TableHead>
       <TableRow>
-        <TableCell>ID</TableCell>
+        <TableCell>dpi</TableCell>
         <TableCell>Nombre</TableCell>
+        <TableCell>Apellido</TableCell>
+        <TableCell>Edad</TableCell>
+        <TableCell>Direccion</TableCell>
         <TableCell>Nacionalidad</TableCell>
-        <TableCell>Acciones</TableCell>
+        <TableCell>Telefono</TableCell>
+        <TableCell>email</TableCell>
+        <TableCell>estadocivil</TableCell>
+        <TableCell>Nit</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {data.map((autor) => (
-        <TableRow key={autor.id}>
-          <TableCell>{autor.id}</TableCell>
-          <TableCell>{autor.Nombre}</TableCell>
-          <TableCell>{autor.Nacionalidad}</TableCell>
+      {data.map((cliente) => (
+        <TableRow key={cliente.dpi}>
+          <TableCell>{cliente.dpi}</TableCell>
+          <TableCell>{cliente.nombre}</TableCell>
+          <TableCell>{cliente.apellido}</TableCell>
+          <TableCell>{cliente.edad}</TableCell>
+          <TableCell>{cliente.direccion}</TableCell>
+          <TableCell>{cliente.Nacionalidad}</TableCell>
+          <TableCell>{cliente.telefono}</TableCell>
+          <TableCell>{cliente.email}</TableCell>
+          <TableCell>{cliente.estadocivil}</TableCell>
+          <TableCell>{cliente.nit}</TableCell>
           <TableCell>
-            <Edit className={styles.iconos} onClick={()=>selAutor(autor,'Edit')}/>
+            <Edit className={styles.iconos} onClick={()=>selCliente(cliente,'Edit')}/>
             &nbsp;&nbsp;&nbsp;
-            <Delete className={styles.iconos } onClick={()=>selAutor(autor,'Elim')}/>
+            <Delete className={styles.iconos } onClick={()=>selCliente(cliente,'Elim')}/>
           </TableCell>
         </TableRow>
       ))}
@@ -236,4 +273,4 @@ onClose={()=>abrirCerrarModalEliminar()}>
     );
 }
 
-export default Autores;
+export default Clientes;
