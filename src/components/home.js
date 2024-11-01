@@ -54,6 +54,17 @@ function Home() {
             Recepción de Libros
           </Button>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            startIcon={<PersonAdd />} // Puedes usar un icono diferente si lo prefieres
+            href='https://frontumg.onrender.com/autores'
+          >
+            Añadir Autor
+          </Button>
+        </Grid>
       </Grid>
     </Container>
   );

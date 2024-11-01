@@ -1,7 +1,6 @@
 import { Grid, Container, Paper, Avatar, Typography, TextField,Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-//import axios from 'axios';
 import {makeStyles} from '@mui/styles';
 import fondo from '../recursos/fondo.png';
 import {LockOutlined as LockOutlinedIcon} from '@mui/icons-material'
