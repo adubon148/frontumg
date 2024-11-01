@@ -107,6 +107,7 @@ function Autores(){
                     autor.FechaNac=selectAutor.FechaNac;
                     
                 }
+                return autor;
             })
             setData(datanueva);
             abrirCerrarModaModificar();

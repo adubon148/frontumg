@@ -106,6 +106,7 @@ function Clientes(){
                     cliente.nit=clientselect.nit                    
                     
                 }
+                return cliente;
             })
             setData(datanueva);
             abrirCerrarModaModificar();
