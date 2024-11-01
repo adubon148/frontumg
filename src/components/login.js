@@ -1,4 +1,4 @@
-import { Grid, Container, Paper, Avatar, Typography, TextField,Button } from '@mui/material';
+import { Grid, Container, Paper, Avatar, Typography, TextField,Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 //import axios from 'axios';
@@ -53,10 +53,16 @@ const useStyles = makeStyles (theme=>({
 const Login= () =>{
 
     const navigate =useNavigate();
-    const [eror, setError] = useState('');
-    
+    const [error, setError] = useState('');
+    const [open,setOpen]=useState(false);
     const classes = useStyles()
     const [body,setBody]=useState({Username:'',password:'',nombre:''});
+
+    const abrirCerrarDialogo =()=>{
+        
+        setOpen(!open);
+        
+    }
 
     const handleChange=e=>{
        
@@ -68,21 +74,35 @@ const Login= () =>{
     const handleLogin = async () => {
         try {
             const response = await axios.get(`https://apibooks-6xo2.onrender.com/api/users/onebyid/${body.Username}`);
-            const user = response.data;
+            const user = response.data.usuarios;
+            // Verificamos si el usuario existe
+            if (!user) {
+                // Si el usuario no existe
+                setError('Usuario no existe');
+                abrirCerrarDialogo();
+                return; // Salimos para no ejecutar el siguiente bloque
+            }
 
-            if (user && user.password === body.password) {
+            // Si el usuario existe, verificamos la contraseña
+            if (user.password === body.password) {
                 // Si la autenticación es exitosa, navega a la página de inicio
                 navigate('/home');
             } else {
                 // Si la contraseña es incorrecta
                 setError('Contraseña incorrecta');
+                abrirCerrarDialogo();
             }
         } catch (error) {
-            // Si el usuario no existe o hay un error en la solicitud
-            setError('Usuario no existe o ocurrió un error');
-            console.log(eror)
+            // Maneja el error de la solicitud
+            setError('Ocurrió un error al intentar iniciar sesión');
+            abrirCerrarDialogo();
+            console.log(error);
         }
+
+            
     };
+
+
 
     return (
         <Grid container component='main' className={classes.root}>
@@ -129,6 +149,17 @@ const Login= () =>{
                 </div>
 
             </Container>
+            <Dialog open={open}>
+                <DialogTitle>Error Iniciando Sesion</DialogTitle>
+                <DialogContent>
+                    <Typography>{error}</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={abrirCerrarDialogo} color='primary'>
+                        Cerrar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Grid>
     )
 
