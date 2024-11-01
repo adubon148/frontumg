@@ -1,10 +1,16 @@
-import { Grid, Container, Paper, Avatar, Typography, TextField,Button } from '@material-ui/core';
+import { Grid, Container, Paper, Avatar, Typography, TextField,Button } from '@mui/material';
+import {createTheme} from '@mui/material/styles'
 import React, { act, Component, useEffect, useState } from 'react';
 import axios from 'axios';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@mui/styles';
 import fondo from '../recursos/fondo.png';
-import {LockOutlined as LockOutlinedIcon} from '@material-ui/icons'
+import {LockOutlined as LockOutlinedIcon} from '@mui/icons-material'
 import { Form, } from 'react-router-dom';
+
+
+const heme = createTheme({
+    spacing:4,
+});
 
 
 const useStyles = makeStyles (theme=>({

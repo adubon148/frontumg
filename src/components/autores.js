@@ -1,9 +1,9 @@
-import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Modal,TextField, Button } from '@material-ui/core';
+import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Modal,TextField, Button } from '@mui/material';
 import React, { act, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {Edit, Delete} from '@material-ui/icons';
-import {makeStyles} from '@material-ui/core/styles';
+import {Edit, Delete} from '@mui/icons-material';
+import {makeStyles} from '@mui/styles';
 
 
 const useStyles = makeStyles((theme) => ({

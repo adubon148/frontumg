@@ -2,6 +2,19 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Autores from './components/autores';
 import Login from './components/login';
 import Clientes from './components/clientes';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+
+const theme = createTheme({
+  spacing: 4,  // Ajuste de separación base
+  palette: {
+    primary: {
+      main: '#1976d2', // Azul por defecto
+    },
+    secondary: {
+      main: '#dc004e', // Color secundario
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -20,8 +33,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />  {/* Resetea el CSS para que Material UI tome el control */}
     <RouterProvider router={router} />
-  );
+  </ThemeProvider>
+);
 }
 
 export default App;
