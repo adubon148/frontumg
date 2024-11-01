@@ -1,10 +1,11 @@
 import { Grid, Container, Paper, Avatar, Typography, TextField,Button } from '@mui/material';
 import React, { useState } from 'react';
+import axios from 'axios';
 //import axios from 'axios';
 import {makeStyles} from '@mui/styles';
 import fondo from '../recursos/fondo.png';
 import {LockOutlined as LockOutlinedIcon} from '@mui/icons-material'
-import { Form, } from 'react-router-dom';
+import { Form, useNavigate, } from 'react-router-dom';
 
 
 const useStyles = makeStyles (theme=>({
@@ -47,7 +48,12 @@ const useStyles = makeStyles (theme=>({
 }))
 
 
+
+
 const Login= () =>{
+
+    const navigate =useNavigate();
+    const [eror, setError] = useState('');
     
     const classes = useStyles()
     const [body,setBody]=useState({Username:'',password:'',nombre:''});
@@ -59,6 +65,24 @@ const Login= () =>{
             [e.target.name]:e.target.value
         })
     }
+    const handleLogin = async () => {
+        try {
+            const response = await axios.get(`https://apibooks-6xo2.onrender.com/api/users/onebyid/${body.Username}`);
+            const user = response.data;
+
+            if (user && user.password === body.password) {
+                // Si la autenticación es exitosa, navega a la página de inicio
+                navigate('/home');
+            } else {
+                // Si la contraseña es incorrecta
+                setError('Contraseña incorrecta');
+            }
+        } catch (error) {
+            // Si el usuario no existe o hay un error en la solicitud
+            setError('Usuario no existe o ocurrió un error');
+            console.log(eror)
+        }
+    };
 
     return (
         <Grid container component='main' className={classes.root}>
@@ -98,7 +122,7 @@ const Login= () =>{
                             variant='contained'
                             color='secondary'
                             className={classes.Button}
-                            href='https://frontumg.onrender.com/home'
+                            onClick={handleLogin}
                         >Iniciar Sesion</Button>
                     </Form>
 
