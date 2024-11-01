@@ -1,5 +1,5 @@
 import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Modal,TextField, Button } from '@mui/material';
-import React, { act, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 import {Edit, Delete} from '@mui/icons-material';
