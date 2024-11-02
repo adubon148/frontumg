@@ -41,6 +41,7 @@ function Home() {
             variant="contained"
             color="primary"
             startIcon={<Add />}
+            href='https://frontumg.onrender.com/prestamo'
           >
             Realizar Préstamo
           </Button>
@@ -51,6 +52,7 @@ function Home() {
             variant="contained"
             color="secondary"
             startIcon={<AssignmentReturn />}
+            
           >
             Recepción de Libros
           </Button>
@@ -60,7 +62,7 @@ function Home() {
             fullWidth
             variant="contained"
             color="primary"
-            startIcon={<PersonAdd />} // Puedes usar un icono diferente si lo prefieres
+            startIcon={<PersonAdd />} 
             href='https://frontumg.onrender.com/autores'
           >
             Añadir Autor

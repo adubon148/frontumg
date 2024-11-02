@@ -85,6 +85,7 @@ const Login= () =>{
             // Si el usuario existe, verificamos la contraseña
             if (user.password === body.password) {
                 // Si la autenticación es exitosa, navega a la página de inicio
+                sessionStorage.setItem("Username",user.Username)
                 navigate('/home');
             } else {
                 // Si la contraseña es incorrecta
