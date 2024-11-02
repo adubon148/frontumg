@@ -139,6 +139,8 @@ function Libro(){
   
     useEffect(() => {
         getAutoresYTipos();
+        getLibros();
+        
       }, []);
 
     const bodyInsertar=(
