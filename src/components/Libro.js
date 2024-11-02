@@ -1,4 +1,4 @@
-import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Modal,TextField, Button ,Select, MenuItem, InputLabel, FormControl} from '@mui/material';
+import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Modal,TextField, Button , MenuItem, InputLabel} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
@@ -55,8 +55,8 @@ function Libro(){
         try {
           const autoresResponse = await axios.get("https://apibooks-6xo2.onrender.com/api/autor/all");
           const tiposResponse = await axios.get("https://apibooks-6xo2.onrender.com/api/tipolibro/all");
-          setAutores(autoresResponse.data);
-          setTipos(tiposResponse.data);
+          setAutores(autoresResponse.data.autores);
+          setTipos(tiposResponse.data.tipos);
         } catch (error) {
           console.error("Error al obtener autores y tipos:", error);
         }
@@ -150,45 +150,46 @@ function Libro(){
             <br/>
             <TextField name='descrpcion' className={styles.inputMaterial} label="descrpcion"onChange={handeChange} />
             <br/>
-            <FormControl fullWidth className={styles.inputMaterial}>
-      <InputLabel>Autor</InputLabel>
-      <Select
-        name="autorId"
-        value={libroSelect.autorId}
-        onChange={handeChange}
-      >
-        {autores.map((autor) => (
-          <MenuItem key={autor.id} value={autor.id}>
-            {autor.nombre} {/* Usa la propiedad adecuada de los datos de autor */}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-    <br />
+            {/* Combobox para seleccionar Autor */}
+        <InputLabel>Autor</InputLabel>
+        <TextField
+            select
+            name="autorId"
+            className={styles.inputMaterial}
+            value={libroSelect.autorId}
+            onChange={handeChange}
+        >
+            {autores.map((autor) => (
+                <MenuItem key={autor.id} value={autor.id}>
+                    {autor.Nombre}
+                </MenuItem>
+            ))}
+        </TextField>
+        <br />
 
-    <FormControl fullWidth className={styles.inputMaterial}>
-      <InputLabel>Tipo</InputLabel>
-      <Select
-        name="tipoid"
-        value={libroSelect.tipoid}
-        onChange={handeChange}
-      >
-        {tipos.map((tipo) => (
-          <MenuItem key={tipo.id} value={tipo.id}>
-            {tipo.nombre} {/* Usa la propiedad adecuada de los datos de tipo */}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-    <br /><br />
+        {/* Combobox para seleccionar Tipo */}
+        <InputLabel>Tipo</InputLabel>
+        <TextField
+            select
+            name="tipoid"
+            className={styles.inputMaterial}
+            value={libroSelect.tipoid}
+            onChange={handeChange}
+        >
+            {tipos.map((tipo) => (
+                <MenuItem key={tipo.id} value={tipo.id}>
+                    {tipo.tipo}
+                </MenuItem>
+            ))}
+        </TextField>
+        <br /><br />
 
-    <div align="right">
-      <Button color="primary" onClick={() => peticionPost()}>Insertar</Button>
-      <Button onClick={() => abrirCerrarModalInsertar()}>Cancelar</Button>
+        <div align="right">
+            <Button color="primary" onClick={() => peticionPost()}>Insertar</Button>
+            <Button onClick={() => abrirCerrarModalInsertar()}>Cancelar</Button>
+        </div>
     </div>
-  </div>
 );
-
     const bodyEditar=(
         <div className={styles.modal}>
         <h3>Editar libro</h3>
@@ -198,36 +199,38 @@ function Libro(){
             <br/>
             <TextField name='descrpcion' className={styles.inputMaterial} label="descrpcion"onChange={handeChange} value={libroSelect&&libroSelect.descrpcion} />
             <br/>
-            <FormControl fullWidth className={styles.inputMaterial}>
-            <InputLabel>Autor</InputLabel>
-            <Select
-                name="autorId"
-                value={libroSelect && libroSelect.autorId}
-                onChange={handeChange}
-            >
-                {autores.map((autor) => (
-                    <MenuItem key={autor.id} value={autor.id}>
-                        {autor.nombre}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+            {/* Combobox para seleccionar Autor */}
+        <InputLabel>Autor</InputLabel>
+        <TextField
+            select
+            name="autorId"
+            className={styles.inputMaterial}
+            value={libroSelect.autorId || ""}
+            onChange={handeChange}
+        >
+            {autores.map((autor) => (
+                <MenuItem key={autor.id} value={autor.id}>
+                    {autor.Nombre}
+                </MenuItem>
+            ))}
+        </TextField>
         <br />
 
-        <FormControl fullWidth className={styles.inputMaterial}>
-            <InputLabel>Tipo</InputLabel>
-            <Select
-                name="tipoid"
-                value={libroSelect && libroSelect.tipoid}
-                onChange={handeChange}
-            >
-                {tipos.map((tipo) => (
-                    <MenuItem key={tipo.id} value={tipo.id}>
-                        {tipo.nombre}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        {/* Combobox para seleccionar Tipo */}
+        <InputLabel>Tipo</InputLabel>
+        <TextField
+            select
+            name="tipoid"
+            className={styles.inputMaterial}
+            value={libroSelect.tipoid || ""}
+            onChange={handeChange}
+        >
+            {tipos.map((tipo) => (
+                <MenuItem key={tipo.id} value={tipo.id}>
+                    {tipo.descripcion}
+                </MenuItem>
+            ))}
+        </TextField>
         <br /><br />
 
         <div align="right">
