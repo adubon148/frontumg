@@ -63,7 +63,7 @@ function Home() {
             variant="contained"
             color="primary"
             startIcon={<PersonAdd />} 
-            href='https://frontumg.onrender.com/autores'
+            href='https://frontumg.onrender.com/recep'
           >
             Añadir Autor
           </Button>
