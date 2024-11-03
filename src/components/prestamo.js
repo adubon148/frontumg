@@ -36,12 +36,12 @@ function Prestamo(){
     const [modalElimiar,setModalEliminar]=useState(false);
     const [clientes,setClientes]=useState([]);
     const [libros,setLibros]=useState([]);
-    const [userId, setUserId] = useState("");
+    const [userid, setUserId] = useState("");
 
     const getPrestamos = async () => {
       await axios.get(baseurl+"all")
         .then(response => {
-          setData(response.data.prestamos); // Actualiza el estado
+          setData(response.data.prestamos.filter(prestamo=>prestamo.idestado===1)); 
           console.log(response.data);
         })
         .catch(error => {
@@ -77,7 +77,7 @@ function Prestamo(){
     }
 
     const peticionPost=async()=>{
-        const prestamoData = { ...prestamoSelect, userId };
+        const prestamoData = { ...prestamoSelect, userid };
         await axios.post(baseurl+"crear",prestamoData)
         .then(response=>{
             
@@ -89,6 +89,7 @@ function Prestamo(){
     }
 
     const peticionDelete=async()=>{
+        
         await axios.delete(baseurl+"delete/"+prestamoSelect.id)
         .then(response=>{
             setData(data.filter(prestamo=>prestamo.id!==prestamoSelect.id))
@@ -101,8 +102,14 @@ function Prestamo(){
         setModalInsertar(!modalInsertar);
     }
     const abrirCerrarModalEliminar=()=>{
+        
         setModalEliminar(!modalElimiar);
     }
+
+    const seleccionarPrestamoEliminar = (prestamo) => {
+        setPrestamoSelect(prestamo); // Actualiza el préstamo seleccionado
+        abrirCerrarModalEliminar(); // Abre el modal de eliminación
+    };
 
 
   
@@ -198,7 +205,7 @@ function Prestamo(){
           <TableCell>{prestamo.idlibro}</TableCell>
           <TableCell>{prestamo.idcliente}</TableCell>
           <TableCell>
-            <Delete className={styles.iconos } onClick={()=>abrirCerrarModalEliminar()}/>
+            <Delete className={styles.iconos } onClick={()=>seleccionarPrestamoEliminar(prestamo)}/>
           </TableCell>
         </TableRow>
       ))}

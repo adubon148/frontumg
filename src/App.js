@@ -5,6 +5,7 @@ import Clientes from './components/Clientes.js';
 import Home from './components/home.js';
 import Libro from './components/Libro.js';
 import Prestamo from './components/prestamo.js';
+import Recepcion from './components/recepcion.js';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
 const theme = createTheme({
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: '/libro',
     element: <Libro />,
+  },
+  {
+    path: '/recep',
+    element: <Recepcion />,
   },
   {
     path: '/home',
