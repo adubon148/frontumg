@@ -63,7 +63,6 @@ function Prestamo(){
     const [prestamoSelect,setPrestamoSelect]=useState({
       id:'',
       fechaprestamo:'',
-      idestado:'',
       idlibro:'',
       idcliente:''
     })
