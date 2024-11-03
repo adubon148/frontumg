@@ -194,9 +194,9 @@ function Prestamo(){
       {data.map((prestamo) => (
         <TableRow key={prestamo.id}>
           <TableCell>{prestamo.id}</TableCell>  
-          <TableCell>{prestamo.Titulo}</TableCell>
-          <TableCell>{prestamo.AñoPublicacion}</TableCell>
-          <TableCell>{prestamo.descrpcion}</TableCell>
+          <TableCell>{prestamo.fechaprestamo}</TableCell>
+          <TableCell>{prestamo.idlibro}</TableCell>
+          <TableCell>{prestamo.idcliente}</TableCell>
           <TableCell>
             <Delete className={styles.iconos } onClick={()=>abrirCerrarModalEliminar()}/>
           </TableCell>
