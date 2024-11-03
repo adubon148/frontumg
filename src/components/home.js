@@ -52,6 +52,7 @@ function Home() {
             variant="contained"
             color="secondary"
             startIcon={<AssignmentReturn />}
+            href='https://frontumg.onrender.com/recep'
             
           >
             Recepción de Libros
@@ -63,7 +64,7 @@ function Home() {
             variant="contained"
             color="primary"
             startIcon={<PersonAdd />} 
-            href='https://frontumg.onrender.com/recep'
+            href='https://frontumg.onrender.com/autores'
           >
             Añadir Autor
           </Button>
